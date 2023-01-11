@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Clock Web App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+      <symbol id="bootstrap" viewBox="0 0 118 94">
+        <title>Bootstrap</title>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M24.509 0c-6.733 0-11.715 5.893-11.492 12.284.214 6.14-.064 14.092-2.066 20.577C8.943 39.365 5.547 43.485 0 44.014v5.972c5.547.529 8.943 4.649 10.951 11.153 2.002 6.485 2.28 14.437 2.066 20.577C12.794 88.106 17.776 94 24.51 94H93.5c6.733 0 11.714-5.893 11.491-12.284-.214-6.14.064-14.092 2.066-20.577 2.009-6.504 5.396-10.624 10.943-11.153v-5.972c-5.547-.529-8.934-4.649-10.943-11.153-2.002-6.484-2.28-14.437-2.066-20.577C105.214 5.894 100.233 0 93.5 0H24.508zM80 57.863C80 66.663 73.436 72 62.543 72H44a2 2 0 01-2-2V24a2 2 0 012-2h18.437c9.083 0 15.044 4.92 15.044 12.474 0 5.302-4.01 10.049-9.119 10.88v.277C75.317 46.394 80 51.21 80 57.863zM60.521 28.34H49.948v14.934h8.905c6.884 0 10.68-2.772 10.68-7.727 0-4.643-3.264-7.207-9.012-7.207zM49.948 49.2v16.458H60.91c7.167 0 10.964-2.876 10.964-8.281 0-5.406-3.903-8.178-11.425-8.178H49.948z"></path>
+      </symbol>
+    </svg>
+    <div class="container">
+      <div class="height d-flex flex-column justify-content-center align-items-center">
+        <h1>Clock Web App</h1>
+        <p class="lead text-center" style="width: 100%;">Thank you for visiting the Clock Web App! There are 4 features you can try out!</p>
+        <hr />
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#date-time-modal">CLOCK</button>
+        <p class="lead text-center" style="width: 85%;">This feature displays the current date and time.</p>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#stopwatch-modal">STOPWATCH</button>
+        <p class="lead text-center" style="width: 85%;">This feature is a digital stopwatch that counts up time; you can pause while the stopwatch is active, and resume to unpause, as well as reset the stopwatch time.</p>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#alarm-modal">ALARM</button>
+        <p class="lead text-center" style="width: 85%;">This feature allows you to create an alarm for a specific time (the day of) and when the alarm time set matches the current time, it will beep continuously until you shut the alarm off via "Reset Alarm" or via the notification that will appear on the bottom for a short period of time.</p>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#timer-modal">TIMER</button>
+        <p class="lead text-center" style="width: 85%;">This feature allows you to set a timer, and when the timer hits zero, it will continuously beep until you shut the timer off via "Reset" or via the notification that will appear on the bottom for a short period of time.</p>
+      </div>
+
+      <div class="modal fade" id="date-time-modal" tabindex="-1" aria-labelledby="date-time-modal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="date-time-modal-label">Clock</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center">
+              <div id="time-and-date-container">
+                <h4 style="font-weight: bold;">Today's Date</h4>
+                <span class="current-date"></span>
+                <hr />
+                <h4 style="font-weight: bold;">Today's Time</h4>
+                <span class="current-time"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="stopwatch-modal" tabindex="-1" aria-labelledby="stopwatch-modal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="stopwatch-modal-label">Stopwatch</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="wrapper">
+                <div id="stopwatch-container">
+                  <h4 style="font-weight: bold;">Stopwatch</h4>
+                  <div id="stopwatch">
+                    <span id="stopwatch-time">00:00:00.0</span>
+                  </div>
+                  <br />
+                  <div class="btn-group" role="group" aria-label="Basic outlined example">
+                    <button id="stopwatch-start-btn" onclick="startStopwatch()" class="btn btn-outline-primary">Start</button>
+                    <button id="stopwatch-pause-btn" onclick="pauseStopwatch()" class="btn btn-outline-primary">Pause</button>
+                    <button id="stopwatch-reset-btn" onclick="resetStopwatch()" class="btn btn-outline-primary">Reset</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal fade" id="timer-modal" tabindex="-1" aria-labelledby="timer-modal" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="timer-modal-label">Timer</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="wrapper">
+                <div id="timer-container">
+                  <h4 style="font-weight: bold;">Timer</h4>
+                  <div id="timer">
+                    <div id="progress-bar"></div>
+                    <div id="timer-display">00:00:00</div>
+                  </div>
+                  <hr />
+                  <form id="duration-form">
+                    <div class="row g-2">
+                      <div class="col-md">
+                        <div class="form-floating">
+                          <input type="number" class="form-control" id="timer-hours" name="timer-hours" placeholder="Enter hours" min="0" required>
+                          <label for="timer-hours">Hours</label>
+                        </div>
+                      </div>
+                      <div class="col-md">
+                        <div class="form-floating">
+                          <input type="number" class="form-control" id="timer-minutes" name="timer-minutes" placeholder="Enter minutes" min="0" max="59" required>
+                          <label for="timer-minutes">Minutes</label>
+                        </div>
+                      </div>
+                      <div class="col-md">
+                        <div class="form-floating">
+                          <input type="number" class="form-control" id="timer-seconds" name="timer-seconds" placeholder="Enter seconds" min="0" max="59" required>
+                          <label for="timer-seconds">Seconds</label>
+                        </div>
+                      </div>
+                      <button id="start-timer-btn" onclick="submitTimer()" class="btn btn-outline-primary">Submit</button>
+                      <div class="btn-group" role="group" aria-label="Basic outlined example">
+                        <button id="pause-resume-timer-btn" class="btn btn-outline-primary">Pause</button>
+                        <button id="reset-timer-btn" onclick="resetTimer()" class="btn btn-outline-primary">Reset</button>
+                      </div>
+                  </form>
+                  <audio id="timer-beep-audio" src="http://soundbible.com/grab.php?id=1252&type=mp3"></audio>
+                </div>
+                <div class="toast-container position-fixed bottom-0 start-50 translate-middle-x">
+                  <div id="timer-toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                      <strong class="me-auto">Timer</strong>
+                      <small>Just now</small>
+                      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">Your timer is going off! <div class="mt-2 pt-2 border-top">
+                        <button type="button" onclick="resetTimer()" class="btn btn-primary btn-sm" data-bs-dismiss="toast">Turn Off Timer</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="alarm-modal" tabindex="-1" aria-labelledby="alarm-modal" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="alarm-modal-label">Alarm</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div id="alarm-container">
+              <div id="container">
+                <h4 style="font-weight: bold;">Current Time</h4>
+                <div class="current-time"></div>
+                <hr />
+                <div id="create-alarm">
+                  <h4 style="font-weight: bold;">Create Alarm</h4>
+                  <form id="alarm-form">
+                    <div class="row g-2">
+                      <div class="col-md">
+                        <div class="form-floating">
+                          <input type="number" class="form-control" id="alarm-hours" name="hour" placeholder="Enter hours" min="1" max="12" required>
+                          <label for="alarm-hours">Hours</label>
+                        </div>
+                      </div>
+                      <div class="col-md">
+                        <div class="form-floating">
+                          <input type="number" class="form-control" id="alarm-minutes" name="min" placeholder="Enter minutes" min="0" max="59" required>
+                          <label for="alarm-minutes">Minutes</label>
+                        </div>
+                      </div>
+                      <div class="col-md">
+                        <div class="form-floating">
+                          <select class="form-select" id="alarm-zone" name="zone" required>
+                            <option value="" selected disabled>Zone</option>
+                            <option value="AM">AM</option>
+                            <option value="PM">PM</option>
+                          </select>
+                          <label for="alarm-zone">Zone</label>
+                        </div>
+                      </div>
+                      <button id="submit-alarm-btn" onclick="submitAlarm()" class="btn btn-outline-primary">Submit</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+              <div id="active-alarm">
+                <span id="alarm-text"></span>
+                <span id="alarm-time" style="font-weight: bold;"></span>
+                <hr />
+                <button id="reset-alarm-btn" onclick="resetAlarm()" class="btn btn-outline-primary" style="visibility: hidden;">Reset Alarm</button>
+                <button id="edit-alarm-btn" onclick="editAlarm()" class="btn btn-outline-primary" style="visibility: hidden;">Edit Alarm</button>
+              </div>
+              <audio id="alarm-audio" src="http://soundbible.com/grab.php?id=1252&type=mp3"></audio>
+              <div id="alarm-notification">
+                <div class="toast-container position-fixed bottom-0 start-50 translate-middle-x">
+                  <div id="alarm-toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+                    <div class="toast-header">
+                      <strong class="me-auto">Alarm</strong>
+                      <small>Just now</small>
+                      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+                    </div>
+                    <div class="toast-body">Your alarm for <span id="toast-alarm-text"></span> is going off! <div class="mt-2 pt-2 border-top">
+                        <button type="button" onclick="resetAlarm()" class="btn btn-primary btn-sm" data-bs-dismiss="toast">Turn Off Alarm</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div id="footer">
+      <div class="container">
+        <footer class="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
+          <p class="col-md-4 mb-0 text-muted">&copy; 2022 - Nathanael Allison</p>
+          <a href="https://getbootstrap.com/" class="col-md-4 d-flex align-items-center justify-content-center mb-3 mb-md-0 me-md-auto link-dark text-decoration-none" target="_blank">
+            <svg class="bi me-2" width="40" height="32">
+              <use xlink:href="#bootstrap" />
+            </svg>
+          </a>
+          <ul class="nav col-md-4 justify-content-end">
+            <li class="nav-item">
+              <a href="#" class="nav-link px-2 text-muted">Home</a>
+            </li>
+            <li class="nav-item">
+              <a href="https://github.com/inferno3969" class="nav-link px-2 text-muted" target="_blank">GitHub</a>
+            </li>
+          </ul>
+        </footer>
+      </div>
+    </div>
+    </div>
+  </body>
+  <script src="https://code.jquery.com/jquery-3.6.1.min.js" integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ=" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+  <script src="js/index_script.js"></script>
+  <script src="js/stopwatch.js"></script>
+  <script src="js/alarm.js"></script>
+  <script src="js/timer.js"></script>
+</html>
